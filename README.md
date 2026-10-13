@@ -4,7 +4,7 @@ Site estático da HUB EMPRESARIAMENTO LTDA, CNPJ 63.804.274/0001-53; contato emp
 
 Página inicial mínima: marca/frase, bloco do backup, link da Política de Privacidade e rodapé legal. Política mantém seu conteúdo anterior, alterando apenas identidade, domínio e referências de navegação correspondentes. Sem dependências, JavaScript de navegador, formulários, analytics ou conexão com infraestrutura. Este repositório não implementa nem audita o app de backup.
 
-**Privado e não publicado.** Renan autorizou tornar o repositório público quando for publicar, mas ainda vai revisar os textos. `publication.json` continua bloqueando deploy; Pages não está habilitado. Push só valida arquivos. Nome técnico do repositório não foi alterado.
+**Textos aprovados por Renan em 13/10/2026.** Repositório público e GitHub Pages autorizados para empresariamento.com.br. Referência da aprovação em `publication.json`; deploy continua manual e push só verifica arquivos. Repositório de destino: empresariamento/empresariamento-site.
 
 ## Revisar localmente
 
@@ -15,6 +15,6 @@ python -m http.server 8787 --bind 127.0.0.1 --directory site
 
 Início: http://127.0.0.1:8787/ ; política: http://127.0.0.1:8787/privacidade/ . Textos completos para copiar/revisar: docs/TEXTOS-FINAIS.md.
 
-`npm run check:publication` deve falhar até autorização expressa de Renan. O workflow Pages é manual; configuração de domínio não é ativada só pelo CNAME.
+`npm run check:publication` valida a aprovação expressa de Renan. Alterações futuras de texto exigem nova revisão; não devem reutilizar a aprovação desta versão. O workflow Pages é manual; configuração de domínio não é ativada só pelo CNAME.
 
-O domínio novo apresenta falha DNS pública: não foi possível inventariar MX ou provar ausência de serviços. Antes de alterar DNS, Renan verifica a zona existente. Evidências: docs/DNS-ANTES.md. Preparação futura, sem aplicação: docs/PUBLICACAO.md. Estado: docs/STATUS.md.
+Renan confirmou que empresariamento.com.br não tem site nem e-mail em uso. O domínio empresariamento.com, com e-mail na HostGator, não deve ser tocado. O primeiro passo humano é mostrar a tela DNS atual do .com.br no Registro.br, antes de receber instruções de alteração. Evidências públicas: docs/DNS-ANTES.md. Guia: docs/PUBLICACAO.md. Estado: docs/STATUS.md.

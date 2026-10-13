@@ -2,6 +2,10 @@
 
 13/10/2026. Identidade e domínio alterados por instrução de Renan. Consulta pública realizada e informada antes das alterações locais.
 
+## Autorização posterior do DE
+
+Renan aprovou os textos da versão df04a57 e autorizou tornar o site público, renomear o repositório e ativar GitHub Pages no domínio empresariamento.com.br. Confirmou que o .com.br não tem site/e-mail em uso. empresariamento.com (HostGator) permanece fora do escopo. DNS será aplicado por Renan, um passo por vez; o primeiro é mostrar a configuração atual no Registro.br. Os itens abaixo registram a preparação anterior à autorização.
+
 - empresariamento.com.br registrado/ativo no RDAP; NS declarados a.sec.dns.br e c.sec.dns.br. Google/Cloudflare retornam SERVFAIL e recusa da autoridade. HTTP/HTTPS não abriram. MX/TXT não puderam ser obtidos, não considerados inexistentes.
 - Nenhuma alteração de DNS/NS/MX, acesso ao Registro.br, VPS, Supabase ou Fundação. Nenhuma mensagem de teste enviada por e-mail.
 - Início reduzido à marca/frase, bloco curto do Empresariamento Bunker, política e empresa/CNPJ/e-mail. Removidas seções, cargos e demais conteúdos antigos.
