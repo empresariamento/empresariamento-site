@@ -1,5 +1,7 @@
 # Publicação futura — Empresariamento
 
+Atualização de 13/10/2026: textos aprovados por Renan; repositório público renomeado para empresariamento-site; deploy Pages concluído e domínio configurado no GitHub. DNS/HTTPS ainda pendentes. Os passos abaixo documentam o roteiro original; o próximo passo na conversa é somente mostrar a tela DNS atual do .com.br. empresariamento.com (HostGator) está fora do escopo.
+
 **Não publicar antes de Renan revisar o texto das duas páginas e autorizar.** O domínio alvo é `empresariamento.com.br`; o aplicativo é Empresariamento Bunker. O DNS público apresenta SERVFAIL e não permitiu inventariar site/e-mail/MX. Consulte DNS-ANTES.md.
 
 ## Antes de qualquer mudança DNS
