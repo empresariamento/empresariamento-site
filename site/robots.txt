@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://empia.com.br/sitemap.xml
+Sitemap: https://empresariamento.com.br/sitemap.xml

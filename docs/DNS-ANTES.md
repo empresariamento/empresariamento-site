@@ -1,22 +1,19 @@
-# empia.com.br — consulta pública antes de qualquer mudança
+# empresariamento.com.br — consulta pública antes de mudanças
 
-13/10/2026. Consultas somente leitura, feitas antes da preparação do site. Não houve acesso ao painel Registro.br, VPS ou Supabase. O resultado foi informado a Renan antes da proposta de hospedagem.
+13/10/2026. Consultas somente leitura, informadas a Renan antes da preparação da nova identidade. Nenhum acesso ao painel Registro.br, VPS ou Supabase.
 
-| Nome | Tipo | Resultado |
-|---|---|---|
-| empia.com.br | NS | a.auto.dns.br e b.auto.dns.br |
-| empia.com.br | A | Sem resposta A; domínio existe, retorna SOA |
-| empia.com.br | AAAA | Sem resposta AAAA; domínio existe, retorna SOA |
-| empia.com.br | CNAME | Sem resposta CNAME |
-| empia.com.br | MX | 0 . (Null MX) |
-| empia.com.br | TXT | v=spf1 -all |
-| empia.com.br | CAA | Sem resposta CAA, consultado no Google Public DNS |
-| www.empia.com.br | A/AAAA/CNAME | NXDOMAIN |
+| Consulta | Resultado |
+|---|---|
+| Registro público RDAP do Registro.br | Domínio ativo; registro 05/08/2020; expiração indicada 05/08/2028 |
+| Servidores declarados no RDAP | a.sec.dns.br e c.sec.dns.br |
+| A, AAAA, CNAME, NS, MX, TXT e CAA no Google Public DNS | Status 2: SERVFAIL; nenhum conjunto de registros obtido |
+| A e CNAME de www.empresariamento.com.br no Google | SERVFAIL |
+| A, NS, MX e TXT no Cloudflare | SERVFAIL, No Reachable Authority; autoridade retornou REFUSED |
+| Google com validação DNSSEC desativada na consulta | Continua SERVFAIL; mensagem Name servers refused query (lame delegation?) |
+| HTTP e HTTPS | curl erro 6, Could not resolve host; ferramenta web não conseguiu abrir página |
 
-Cloudflare 1.1.1.1: consulta por Resolve-DnsName. Google Public DNS: DNS over HTTPS `https://dns.google/resolve?name=empia.com.br&type=A`, repetido para AAAA/CNAME/MX/TXT/CAA e www. Google retornou Status 0 sem Answer para A/AAAA/CNAME/CAA e Status 3 para www. SOA: a.auto.dns.br, hostmaster.registro.br, serial 2026286640.
+Fontes de evidência: `https://rdap.registro.br/domain/empresariamento.com.br`, `https://dns.google/resolve?name=empresariamento.com.br&type=MX`, `https://cloudflare-dns.com/dns-query?name=empresariamento.com.br&type=MX` (Accept: application/dns-json). Cloudflare citou 200.160.0.11:53 recusando consultas; Google citou 200.160.0.11 e 200.189.40.11.
 
-HTTP e HTTPS (`curl -I`): erro 6, Could not resolve host. A ferramenta web também não abriu página. Não foi possível obter conteúdo ou resposta HTTP de um site. Não há endereço de hospedagem no domínio principal ou em www nos resolvers consultados. Não se conclui que nenhum outro subdomínio/serviço exista: não foi feita varredura exaustiva.
+**Conclusão limitada:** há um domínio registrado, mas a resolução pública está falhando. Site não abriu nas consultas realizadas. Não foi possível listar MX/TXT: isso não significa que estejam vazios ou que e-mail não exista. Não houve teste de envio/recebimento de e-mail, SMTP ou varredura de outros subdomínios.
 
-Null MX indica que o domínio não aceita e-mail; o SPF -all não autoriza remetentes. Esses registros devem ser preservados ao configurar o site; Pages não precisa alterá-los. O e-mail de contato confirmado é empresariamento@gmail.com, em outro domínio.
-
-Resultados DNS podem mudar. Antes de aplicar, Renan deve conferir novamente a zona no Registro.br e preservar registros de outros serviços. Nenhuma alteração é proposta para os servidores NS.
+Não trocar NS, substituir zona ou criar/remover A/MX/TXT sem conferir a configuração atual. Renan deve consultar os registros existentes e a configuração dos servidores no painel Registro.br, preservando serviços de site, e-mail e validações. O resultado público não autoriza apagar configurações. Nesta entrega nenhuma alteração DNS ou proposta de migração imediata foi aplicada.
