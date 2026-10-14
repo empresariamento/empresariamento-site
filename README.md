@@ -6,6 +6,14 @@ Página inicial mínima: marca/frase, bloco do backup, link da Política de Priv
 
 **Textos aprovados por Renan em 13/10/2026.** Repositório público e GitHub Pages autorizados para empresariamento.com.br. Referência da aprovação em `publication.json`; deploy continua manual e push só verifica arquivos. Repositório de destino: empresariamento/empresariamento-site.
 
+## Finalidade e preservação do app OAuth
+
+O domínio **empresariamento.com.br** e a **Política de Privacidade** deste site servem ao app OAuth **Empresariamento Bunker**, fornecendo sua identificação pública e informações sobre o tratamento de dados. O site existe para essa finalidade; não há trabalho de SEO nem envio de sitemap ao Search Console.
+
+**Não remover o domínio, a configuração do GitHub Pages ou a Política de Privacidade.** Manter disponíveis por HTTPS a página inicial em https://empresariamento.com.br/ e a política em https://empresariamento.com.br/privacidade/. Qualquer remoção ou alteração desses endereços exige autorização explícita de Renan e avaliação do impacto no app OAuth.
+
+HTTPS confirmado nas duas páginas em 14/10/2026: certificado válido e respostas HTTP 200. O domínio separado empresariamento.com e seu e-mail na HostGator permanecem fora do escopo.
+
 ## Revisar localmente
 
 ```sh
