@@ -22,7 +22,7 @@ for (const file of files) {
   }
 }
 const privacy = readFileSync(resolve(site, 'privacidade/index.html'), 'utf8');
-for (const required of ['Empresariamento Bunker', 'https://www.googleapis.com/auth/drive.file', 'criados por ele', 'Limited Use', 'Lei nº 13.709/2018']) {
+for (const required of ['Empresariamento Bunker', 'https://www.googleapis.com/auth/drive.file', 'criados por ele', 'Limited Use', 'Lei nº 13.709/2018', 'Aplicativo EMPIA e Meta Ads', 'ads_management', 'business_management', 'Exclusão de dados — EMPIA']) {
   if (!privacy.includes(required)) throw new Error(`Política sem ${required}`);
 }
 if (readFileSync(resolve(site, 'CNAME'), 'utf8').trim() !== policy.domain) throw new Error('CNAME divergente');

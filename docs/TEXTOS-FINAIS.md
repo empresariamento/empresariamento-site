@@ -1,4 +1,6 @@
-# Textos finais para revisão — não publicados
+# Textos aprovados em 13/10/2026 — registro histórico
+
+> Este arquivo preserva a versão aprovada para o Empresariamento Bunker. O rascunho de 21/10/2026 que acrescenta o aplicativo EMPIA e o tratamento de dados da Meta está em `site/privacidade/index.html` e ainda depende de revisão e aprovação expressa de Renan. Não usar este registro histórico para revisar ou publicar a nova versão.
 
 ## Página inicial
 
