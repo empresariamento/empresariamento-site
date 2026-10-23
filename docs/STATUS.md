@@ -1,4 +1,13 @@
-# Empresariamento — GitHub Pages publicado; DNS pendente
+# Empresariamento — site publicado; atualização EMPIA em preparação
+
+## Rascunho EMPIA — 21/10/2026
+
+- Cópia pública do repositório preparada localmente em branch própria, sem commit, push, PR ou publicação.
+- Página inicial e política ampliadas para identificar o aplicativo EMPIA e o uso autorizado da Marketing API da Meta.
+- Rascunho descreve dados e finalidades, permissões solicitadas, isolamento entre clientes, retenção, revogação e instruções explícitas de exclusão.
+- Aprovação anterior não foi reutilizada. Renan aprovou expressamente em 21/10/2026 os cinco pontos do novo texto, e a referência foi registrada em `publication.json`.
+- Antes da aprovação, `npm run check` passou, `npm run check:publication` recusou a publicação como esperado e `git diff --check` passou. Após a aprovação, os testes devem ser repetidos antes do PR.
+- Pendente: autenticação controlada do GitHub, PR e publicação pelo fluxo aprovado.
 
 13/10/2026. Identidade e domínio alterados por instrução de Renan. Consulta pública realizada e informada antes das alterações locais.
 
