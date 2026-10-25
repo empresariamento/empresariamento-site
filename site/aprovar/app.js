@@ -1,5 +1,5 @@
 // DE approval page for Meta Ads packages (DEC-26). Renders with textContent only.
-import { OPERATIONS, checkRow, dateTime, describePackage } from './view.js';
+import { OPERATIONS, checkRow, dateTime, describePackage, technicalView } from './view.js';
 
 const DE_EMAIL = 'empresariamento@gmail.com';
 const REDIRECT = 'https://empresariamento.com.br/aprovar/';
@@ -122,11 +122,16 @@ async function showDetail(item) {
   const body = [el('button', { onclick: () => showList() }, '← Voltar à lista')];
   for (const section of sections) {
     body.push(el('section', { className: 'card' }, el('h3', {}, section.title),
-      el('ul', { className: 'lines' }, section.lines.map(line => el('li', {}, line)))));
+      el('ul', { className: 'lines' }, section.lines.map(line => el('li', {}, line))),
+      (section.previews || []).map(p => el('figure', { className: 'preview' },
+        el('figcaption', {}, p.label),
+        p.image ? el('img', { src: p.image, alt: `Imagem do ${p.label}` }) : null,
+        el('ul', { className: 'lines' }, p.lines.map(line => el('li', {}, line))),
+        p.warning ? el('p', { className: 'warning' }, p.warning) : null))));
   }
   body.push(el('section', { className: 'card' }, el('h3', {}, 'Hash do pacote (SHA-256)'), el('code', { className: 'hash' }, hash),
     el('p', { className: 'small' }, `Válido até ${dateTime(row.expira_em)}. Uma aprovação vale só para este pacote.`)));
-  body.push(el('details', {}, el('summary', {}, 'Detalhe técnico completo'), el('pre', {}, pkg ? JSON.stringify(pkg, null, 2) : row.conteudo)));
+  body.push(el('details', {}, el('summary', {}, 'Detalhe técnico completo'), el('pre', {}, pkg ? JSON.stringify(technicalView(pkg), null, 2) : row.conteudo)));
   if (problems.length) {
     body.push(el('section', { className: 'card error' }, el('h3', {}, 'Não é possível aprovar'), el('ul', {}, problems.map(p => el('li', {}, p)))));
     return show(...body);
@@ -145,7 +150,7 @@ async function showDetail(item) {
         const fn = kind === 'approve' ? 'approve_meta_ads_package' : 'reject_meta_ads_package';
         const { error } = await sb.rpc(fn, { p_aprovacao_id: row.id, p_conteudo_sha256: hash });
         if (error) return showList().then(() => notice('O banco recusou: o pacote pode ter vencido, mudado ou já ter sido decidido. Nada foi feito.', 'error'));
-        return showList(kind === 'approve' ? 'Pacote aprovado. O Max pode executar somente este pacote.' : 'Pacote recusado.');
+        return showList(kind === 'approve' ? 'Pacote aprovado. Ele é executado sozinho em até cerca de 5 minutos e o aviso chega no seu WhatsApp.' : 'Pacote recusado.');
       } }, `Sim, ${verb}`),
       el('button', { onclick: () => actions.replaceChildren(approve, reject) }, 'Cancelar'));
   };
