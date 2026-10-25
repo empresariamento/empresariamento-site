@@ -1,5 +1,5 @@
 {
   "name": "empresariamento-site", "version": "0.1.0", "private": true, "type": "module",
-  "scripts": { "check": "node scripts/check-site.mjs", "check:publication": "node scripts/check-site.mjs --publication" },
+  "scripts": { "check": "node scripts/check-site.mjs && node --test \"tests/*.test.mjs\"", "check:publication": "node scripts/check-site.mjs --publication" },
   "engines": { "node": ">=22" }
 }

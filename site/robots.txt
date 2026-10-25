@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /aprovar/
 
 Sitemap: https://empresariamento.com.br/sitemap.xml
