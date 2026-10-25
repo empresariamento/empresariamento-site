@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { checkRow, describePackage, money, statusText } from '../site/aprovar/view.js';
+import { checkRow, describePackage, money, safeImage, statusText, technicalView } from '../site/aprovar/view.js';
 
 const pkg = {
   schema: 'empia.meta_ads.action.v1', alo_slug: 'alo-renan-previdelo', ad_account_id: 'act_111',
@@ -57,4 +57,42 @@ test('a row is approvable only with matching hash, destination and validity', as
   const bad = JSON.stringify({ ...pkg, operation: 'excluir_campanha' });
   const badRow = row({ conteudo: bad, conteudo_sha256: createHash('sha256').update(bad).digest('hex') });
   assert.ok((await checkRow(badRow)).problems.some(p => p.includes('operação')));
+});
+
+const PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+const withPreview = (preview) => ({ ...pkg, operation: 'alterar_campanha', target: '777', desired_status: null,
+  meta: { add_ads: [{ name: 'Anúncio 2', adset_id: '888', creative: { creative_id: '999' } }] }, creative_preview: preview });
+const previews = (p) => describePackage(p).find(s => s.title === 'Criativos').previews;
+
+test('creative preview shows the image and the text, not only the creative id', () => {
+  const [p] = previews(withPreview([{ anuncio: 'Anúncio 2', creative_id: '999', nome: 'Fertilidade',
+    texto: '1 mês para melhorar', titulo: 'Inscreva-se', link: 'https://exemplo.com.br/', botao: 'LEARN_MORE', imagem: PNG, aviso: null }]));
+  assert.equal(p.image, PNG);
+  assert.match(p.label, /Anúncio “Anúncio 2” · criativo 999 · Fertilidade/);
+  assert.match(p.lines.join('\n'), /Texto: 1 mês para melhorar/);
+  assert.match(p.lines.join('\n'), /Leva para: https:\/\/exemplo.com.br\//);
+  assert.equal(p.warning, '');
+});
+
+test('only embedded raster images are shown; anything else becomes a warning', () => {
+  for (const imagem of ['https://scontent.xx.fbcdn.net/t.jpg', 'data:image/svg+xml;base64,PHN2Zz4=', 'javascript:alert(1)',
+    'data:image/png;base64,abc"onerror="x', 'data:image/png;base64,' + 'A'.repeat(800000), null]) {
+    const [p] = previews(withPreview([{ anuncio: 'A', imagem }]));
+    assert.equal(p.image, null, String(imagem).slice(0, 40));
+    assert.match(p.warning, /Gerenciador/);
+  }
+  assert.equal(safeImage(PNG), PNG);
+});
+
+test('a preview warning from Max is shown and old packages without preview still render', () => {
+  const [p] = previews(withPreview([{ anuncio: 'A', aviso: 'Não consegui ler este criativo na Meta; confira no Gerenciador antes de aprovar.' }]));
+  assert.match(p.warning, /Não consegui ler/);
+  assert.deepEqual(previews(pkg), []);
+});
+
+test('technical view shortens embedded images but keeps everything else', () => {
+  const view = technicalView(withPreview([{ anuncio: 'A', imagem: PNG }]));
+  assert.match(view.creative_preview[0].imagem, /imagem mostrada acima/);
+  assert.equal(view.meta.add_ads[0].creative.creative_id, '999');
+  assert.equal(technicalView(pkg), pkg);
 });

@@ -91,6 +91,36 @@ export function creativeText(creative) {
   return lines.length ? lines : ['criativo sem descrição legível (detalhe técnico abaixo)'];
 }
 
+// Only images embedded in the hashed package are shown; nothing is fetched from elsewhere.
+const IMAGE_RE = /^data:image\/(jpeg|png|webp|gif);base64,[A-Za-z0-9+/]+={0,2}$/;
+const IMAGE_MAX = 800000;
+
+export function safeImage(src) {
+  return typeof src === 'string' && src.length <= IMAGE_MAX && IMAGE_RE.test(src) ? src : null;
+}
+
+const PREVIEW_LABELS = [['texto', 'Texto'], ['titulo', 'Título'], ['descricao', 'Descrição'], ['link', 'Leva para'], ['botao', 'Botão']];
+
+/** What the ad will look like, read from Meta when Max prepared the package. */
+export function creativePreviews(pkg) {
+  const list = Array.isArray(pkg.creative_preview) ? pkg.creative_preview : [];
+  return list.filter(p => p && typeof p === 'object').map(p => {
+    const lines = PREVIEW_LABELS.filter(([key]) => typeof p[key] === 'string' && p[key]).map(([key, label]) => `${label}: ${p[key]}`);
+    const image = safeImage(p.imagem);
+    const warning = typeof p.aviso === 'string' && p.aviso ? p.aviso : (image ? '' : 'Sem imagem na prévia; confira no Gerenciador antes de aprovar.');
+    const label = [p.anuncio ? `Anúncio “${p.anuncio}”` : 'Criativo', p.creative_id ? `criativo ${p.creative_id}` : '', p.nome || '']
+      .filter(Boolean).join(' · ');
+    return { label, image, lines: lines.length ? lines : ['sem texto na prévia'], warning };
+  });
+}
+
+/** The package for the technical view, with embedded images shortened. */
+export function technicalView(pkg) {
+  if (!Array.isArray(pkg.creative_preview)) return pkg;
+  return { ...pkg, creative_preview: pkg.creative_preview.map(p => (p && typeof p.imagem === 'string'
+    ? { ...p, imagem: `[imagem mostrada acima, ${p.imagem.length} caracteres]` } : p)) };
+}
+
 function budgetLines(obj, currency, prefix = '') {
   return Object.entries(BUDGET_KEYS)
     .filter(([key]) => obj && key in obj)
@@ -146,7 +176,7 @@ export function describePackage(pkg, { accountName = '', aloName = '' } = {}) {
   const creatives = [];
   for (const ad of ads) creatives.push(`Anúncio “${ad.name}”:`, ...creativeText(ad.creative).map(l => `  ${l}`));
   if (meta.creative) creatives.push(...creativeText(meta.creative));
-  sections.push({ title: 'Criativos', lines: creatives.length ? creatives : ['não muda'] });
+  sections.push({ title: 'Criativos', lines: creatives.length ? creatives : ['não muda'], previews: creativePreviews(pkg) });
 
   const other = Object.keys(changes).filter(k => !(k in BUDGET_KEYS) && !['targeting', 'start_time', 'end_time', 'stop_time'].includes(k));
   if (other.length) sections.push({ title: 'Outras mudanças', lines: other.map(k => `${k}: ${JSON.stringify(changes[k])}`) });
