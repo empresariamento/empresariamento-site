@@ -1,0 +1,15 @@
+{
+  "name": "Aprovação EMPIA",
+  "short_name": "Aprovar",
+  "description": "Aprovação de pacotes Meta Ads pelo DE.",
+  "start_url": "/aprovar/",
+  "scope": "/aprovar/",
+  "display": "standalone",
+  "background_color": "#f8f9f5",
+  "theme_color": "#183b36",
+  "lang": "pt-BR",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}

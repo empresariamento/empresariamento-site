@@ -1,0 +1,2 @@
+# Integrity (SRI) hashes cover exact bytes: never convert line endings here.
+site/aprovar/** -text
